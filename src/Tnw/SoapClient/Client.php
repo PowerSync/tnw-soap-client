@@ -1,6 +1,7 @@
 <?php
 namespace Tnw\SoapClient;
 
+use SoapHeader;
 use Tnw\SoapClient\Common\AbstractHasDispatcher;
 use Tnw\SoapClient\Soap\SoapClient;
 use Tnw\SoapClient\Result;
@@ -24,7 +25,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * SOAP session header
      *
-     * @var \SoapHeader
+     * @var SoapHeader
      */
     protected $sessionHeader;
 
@@ -391,14 +392,15 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function upsert($externalIdFieldName, array $objects, $type)
+    public function upsert($externalIdFieldName, array $objects, $type, array $headers = [])
     {
         return $this->call(
             'upsert',
-            array(
+            [
                 'externalIDFieldName' => $externalIdFieldName,
-                'sObjects'            => $this->createSoapVars($objects, $type)
-            )
+                'sObjects'            => $this->createSoapVars($objects, $type),
+                'headers'             => $headers
+            ]
         );
     }
 
@@ -543,16 +545,18 @@ class Client extends AbstractHasDispatcher implements ClientInterface
      *
      * @param string $method SOAP operation name
      * @param array  $params SOAP parameters
+     * @param array $headers
      *
      * @return array | \Traversable An empty array or a result object, such
      *                              as QueryResult, SaveResult, DeleteResult.
      */
-    protected function call($method, array $params = array())
+    protected function call($method, array $params = [])
     {
         $this->init();
 
         // Prepare headers
-        $this->soapClient->__setSoapHeaders($this->getSessionHeader());
+        $headers = $this->prepareHeaders($params['headers'] ?? []);
+        $this->soapClient->__setSoapHeaders($headers);
 
         $result = $this->logcall($method, $params);
         if (!isset($result->result)) {
@@ -611,7 +615,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Get session header
      *
-     * @return \SoapHeader
+     * @return SoapHeader
      */
     protected function getSessionHeader()
     {
@@ -625,7 +629,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
      */
     protected function setSessionId($sessionId)
     {
-        $this->sessionHeader = new \SoapHeader(
+        $this->sessionHeader = new SoapHeader(
             self::SOAP_NAMESPACE,
             'SessionHeader',
             array(
@@ -703,6 +707,28 @@ class Client extends AbstractHasDispatcher implements ClientInterface
         }
 
         return $sObject;
+    }
+
+    /**
+     * @param array $headers
+     *
+     * @return SoapHeader[]
+     */
+    private function prepareHeaders(array $headers): array
+    {
+        $sessionHeader = $this->getSessionHeader();
+        if (!$headers) {
+            return [$sessionHeader];
+        }
+
+        $result = [];
+        foreach ($headers as $name => $value) {
+            $result[] = new SoapHeader(self::SOAP_NAMESPACE, $name, $value);
+        }
+
+        $result[] = $sessionHeader;
+
+        return $result;
     }
 }
 
