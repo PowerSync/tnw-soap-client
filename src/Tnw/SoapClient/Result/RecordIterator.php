@@ -58,7 +58,7 @@ class RecordIterator implements \SeekableIterator, \Countable
      * {@inheritdoc}
      * @return object
      */
-    public function current()
+    public function current(): object
     {
         return $this->current;
     }
@@ -92,14 +92,16 @@ class RecordIterator implements \SeekableIterator, \Countable
 
             return $this->getObjectAt($this->pointer);
         }
+
+        return null;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @return int|null
+     * @return int
      */
-    public function key()
+    public function key(): int
     {
         return $this->pointer;
     }
@@ -107,7 +109,7 @@ class RecordIterator implements \SeekableIterator, \Countable
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         $this->pointer++;
     }
@@ -115,7 +117,7 @@ class RecordIterator implements \SeekableIterator, \Countable
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->pointer = 0;
     }
@@ -125,9 +127,9 @@ class RecordIterator implements \SeekableIterator, \Countable
      *
      * @return boolean
      */
-    public function valid()
+    public function valid(): bool
     {
-        return null != $this->getObjectAt($this->pointer);
+        return null !== $this->getObjectAt($this->pointer);
     }
 
     /**
@@ -170,17 +172,17 @@ class RecordIterator implements \SeekableIterator, \Countable
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return $this->queryResult->getSize();
     }
 
     /**
-     * @param int $position
+     * @param int $offset
      */
-    public function seek($position)
+    public function seek(int $offset): void
     {
-        return $this->getObjectAt($position);
+        $this->getObjectAt($offset);
     }
 
     /**
