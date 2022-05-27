@@ -42,9 +42,9 @@ class LoginResult
     /**
      * @return string
      */
-    public function getServerUrl()
+    public function getServerUrl(): string
     {
-        return $this->serverUrl;
+        return (string)$this->serverUrl;
     }
 
     /**
