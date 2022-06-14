@@ -557,7 +557,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
         // Prepare headers
         $headers = $this->prepareHeaders($params['headers'] ?? []);
         $this->soapClient->__setSoapHeaders($headers);
-
+        $params && $params = array_map([$this, 'stripInvalidXml'], $params);
         $result = $this->logcall($method, $params);
         if (!isset($result->result)) {
             return array();
@@ -729,6 +729,42 @@ class Client extends AbstractHasDispatcher implements ClientInterface
         $result[] = $sessionHeader;
 
         return $result;
+    }
+
+    /**
+     * Removes invalid XML
+     *
+     * @param string|mixed $value
+     *
+     * @return string|mixed
+     */
+    private function stripInvalidXml($value)
+    {
+        if (!is_string($value)) {
+            return $value;
+        }
+
+        $ret = "";
+        if (empty($value)) {
+            return $ret;
+        }
+
+        $length = strlen($value);
+        for ($i = 0; $i < $length; $i++) {
+            $current = ord($value[$i]);
+            if (($current == 0x9) ||
+                ($current == 0xA) ||
+                ($current == 0xD) ||
+                (($current >= 0x20) && ($current <= 0xD7FF)) ||
+                (($current >= 0xE000) && ($current <= 0xFFFD)) ||
+                (($current >= 0x10000) && ($current <= 0x10FFFF))) {
+                $ret .= chr($current);
+            } else {
+                $ret .= "";
+            }
+        }
+
+        return $ret;
     }
 }
 
