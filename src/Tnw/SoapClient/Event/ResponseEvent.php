@@ -1,7 +1,7 @@
 <?php
 namespace Tnw\SoapClient\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ResponseEvent extends Event
 {
