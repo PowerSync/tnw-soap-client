@@ -12,7 +12,9 @@ class SObject
      * @var string
      */
     public $Id;
-    
+    public $Company;
+    public $PersonContactId;
+
     public function getId()
     {
         return $this->Id;

@@ -13,6 +13,11 @@ use Psr\Log\LoggerInterface;
 class ClientBuilder
 {
     protected $log;
+    private array $soapOptions;
+    private  $token;
+    private string $password;
+    private string $username;
+    private string $wsdl;
 
     /**
      * Construct client builder with required parameters
@@ -20,7 +25,7 @@ class ClientBuilder
      * @param string $wsdl        Path to your Salesforce WSDL
      * @param string $username    Your Salesforce username
      * @param string $password    Your Salesforce password
-     * @param string $token       Your Salesforce security token
+     * @param $token       Your Salesforce security token
      * @param array  $soapOptions Further options to be passed to the SoapClient
      */
     public function __construct($wsdl, $username, $password, $token, array $soapOptions = array())
