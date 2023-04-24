@@ -10,6 +10,10 @@ class ChildRelationship
     protected $field;
     protected $relationshipName;
 
+    protected $junctionIdListNames;
+    protected $junctionReferenceTo;
+    protected $restrictedDelete;
+
     public function isCascadeDelete()
     {
         return $this->cascadeDelete;
