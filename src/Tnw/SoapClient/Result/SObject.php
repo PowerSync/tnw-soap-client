@@ -6,6 +6,7 @@ namespace Tnw\SoapClient\Result;
  * Standard object
  *
  */
+#[AllowDynamicProperties]
 class SObject
 {
     /**
