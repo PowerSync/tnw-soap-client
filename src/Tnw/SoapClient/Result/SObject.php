@@ -2,6 +2,8 @@
 
 namespace Tnw\SoapClient\Result;
 
+use AllowDynamicProperties;
+
 /**
  * Standard object
  *
@@ -18,6 +20,7 @@ class SObject
 
     public function getId()
     {
+        $this->IsActive = true;
         return $this->Id;
     }
 }
