@@ -13,6 +13,8 @@ use Psr\Log\LoggerInterface;
  *  */
 class LogPlugin implements EventSubscriberInterface
 {
+    protected LoggerInterface $logger;
+
     /**
      * Constructor
      *
