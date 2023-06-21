@@ -29,6 +29,30 @@ class DescribeSObjectResult
     protected $undeletable;
     protected $updateable;
 
+
+    protected $actionOverrides;
+    protected $associateEntityType;
+    protected $associateParentEntity;
+    protected $compactLayoutable;
+    protected $dataTranslationEnabled;
+    protected $deepCloneable;
+    protected $defaultImplementation;
+    protected $hasSubtypes;
+    protected $idEnabled;
+    protected $implementedBy;
+    protected $implementsInterfaces;
+    protected $isInterface;
+    protected $isSubtype;
+    protected $mruEnabled;
+    protected $namedLayoutInfos;
+    protected $networkScopeFieldName;
+    protected $recordTypeInfos;
+    protected $searchLayoutable;
+    protected $supportedScopes;
+    protected $urlDetail;
+    protected $urlEdit;
+    protected $urlNew;
+
     /**
      * @return boolean
      */

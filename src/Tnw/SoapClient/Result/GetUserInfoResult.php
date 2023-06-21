@@ -50,6 +50,8 @@ class GetUserInfoResult
     protected $userUiSkin;
 
     protected $orgDefaultCurrencyIsoCode;
+    protected $chatterExternal;
+    protected $orgDefaultCurrencyLocale;
 
     /**
      * @return boolean

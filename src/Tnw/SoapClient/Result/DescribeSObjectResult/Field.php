@@ -39,6 +39,40 @@ class Field
     protected $updateable;
     protected $writeRequiresMasterRead;
 
+    protected $aggregatable;
+    protected $aiPredictionField;
+    protected $calculatedFormula;
+    protected $cascadeDelete;
+    protected $compoundFieldName;
+    protected $controllerName;
+
+    protected $dataTranslationEnabled;
+    protected $defaultValue;
+    protected $defaultValueFormula;
+
+    protected $displayLocationInDecimal;
+    protected $encrypted;
+    protected $externalId;
+    protected $extraTypeInfo;
+
+    protected $filteredLookupInfo;
+
+    protected $formulaTreatNullNumberAsZero;
+    protected $highScaleNumber;
+
+    protected $mask;
+    protected $maskType;
+
+    protected $permissionable;
+    protected $polymorphicForeignKey;
+    protected $queryByDistance;
+    protected $referenceTargetField;
+
+    protected $restrictedDelete;
+
+    protected $searchPrefilterable;
+
+
     public function isAutoNumber()
     {
         return $this->autoNumber;
